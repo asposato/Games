@@ -1,0 +1,915 @@
+# Littletown is a choose your own adventure mystery game.
+# You're the great detective that Littletown has called on for help.
+# One of their own, June Copeland, is missing.
+# Can you put good investigating skills to use and find June before it's too late?
+
+from __future__ import print_function
+import sys
+if sys.version_info.major < 3:
+    input = raw_input
+
+print('\nWelcome player!\n')
+
+print('What is your first and last name? (two words)\n')
+user_name = input()
+user = user_name.split(' ')
+while len(user) != 2:
+	print('\nSorry, your username must be two words. Please try again.\n')
+	user_name = input()
+	user = user_name.split(' ')
+else: 
+	print("\nNice to meet you, " + str(user_name) + '!\n')
+
+
+def start_game(play_game):
+	affirmative = ['yes', 'Yes', 'YES', 'Yes!', 'yeah', 'ya', 'y']
+	negative = ['no', 'No', 'NO', 'n', 'nah', 'no!', 'No!']
+	while play_game not in affirmative and play_game not in negative: 
+		print("I don't understand your answer. Please try again.\n")
+		play_game = input()
+	else: 
+		if play_game in affirmative: 
+			input("\nGreat! Let's get started. Press Enter to continue...")
+			input("\nIf at any time you want to quit, press Ctrl and C at the same time.")
+			input("\nThis will throw 'KeyboardInterrupt' and you'll be back to base.")
+			input("\nNote: if you quit, your progress will NOT be saved.")
+		elif play_game in negative: 
+			print('\nOkay. Goodbye.')
+			exit()
+
+print("Would you like to play Littletown? (yes or no)\n")
+play_game = input() 
+start_game(play_game)
+
+
+input('\nPrologue: The Case')
+input("\n......................... You are a great detective, " + user[0] +  ".")
+input("\n......................... That's why the people of Littletown have called on you for help.")
+input("\n......................... They need you to investigate and find missing person, June Copeland.")
+input("\n......................... You will meet a few people close to the case. ")
+input('\n......................... But at least one is guilty of a crime...')
+input('\n......................... At least one will deceive you...')
+input('\n......................... Your objectives: Find missing person, June Copeland. \n\t\t\t\t\t\tBring her assailant to justice. ')
+input('\n......................... There are five levels in this game.')
+input("\n......................... You can think of me like your game guide. I'll be helping you out along the way. ")
+input("\n......................... Note if you make a bad enough choice during this investigation, you could lose the case (OR WORSE)")
+input("\n......................... You'll be able to tell it's me by all these dots before I speak.")
+input("\n......................... When you have a conversation with people of Littletown, their speech will be farther left.")
+input("\n......................... Your speech will be farther right.")
+input("\n.......... Oh look, here comes the Sheriff now.")
+
+def spacer(n=5):
+	for i in range(n): 
+		print("\n.")
+	input('')
+spacer()
+
+def Sheriff_amiable(notes):
+	while notes not in ['A', 'a', 'B', 'b', 'C', 'c']:
+		print("\n ............. Your answer doesn't make any sense. Please choose A, B, or C.\n")
+		notes = input()
+	else: 
+		if notes == 'A' or notes == 'a':
+			input("\n \tJohnny will bring our coffees. Let me get you caught up to speed.")
+		elif notes == 'B' or notes == 'b': 
+			input('\n............... As you take out your audio recorder, the Sheriff smiles.')
+			input("\n \tRight! Let me get you caught up to speed.")
+		elif notes == 'C' or notes == 'c':
+			input('\n............... As you take out your notepad, the Sheriff smiles.')
+			input("\n \tRight! Let me get you caught up to speed.")
+			
+def Sheriff_irritated(notes):
+ 	while notes not in ['A', 'a', 'B', 'b', 'C', 'c']:
+ 		print("\n ............. Your answer doesn't make any sense. Please choose A, B, or C.\n")
+ 		notes = input()
+ 	else: 
+ 		if notes == 'A' or notes == 'a':
+ 			input("\n \t\tCan you tell me about June, Sheriff?")
+ 			input("\n \tFirst, what you need to understand here is that we're doing everything we can.")
+ 			input("\n \tBut, like I said, I can't help you until I have my coffee.")
+ 		elif notes == 'B' or notes == 'b': 
+ 			input('\n............... As you take out your audio recorder, the Sheriff heaves an annoyed sigh.')
+ 			input("\n \tLike I said. I can't help you until I have my coffee.")
+ 		elif notes == 'C' or notes == 'c':
+ 			input('\n............... As you take out your notepad, the Sheriff heaves an annoyed sigh.')
+ 			input("\n \tLike I said, I can't help you until I have my coffee.")	
+
+def wrong_order_reaction(wrong_order): 
+	while wrong_order not in ['A', 'a', 'B', 'b', 'C', 'c']: 
+		print("\n ............. Your answer doesn't make any sense. Please choose A, B or C.\n")
+		wrong_order = input()
+	else: 
+		if wrong_order == 'A' or wrong_order == 'a': 
+			print("\n............ You've chosen to throw the drink in Johnny's face.")
+			input("\n............ Johnny shrieks.")
+			input("\n............ The Sheriff grabs you.")
+			input("\n \t You're under arrest for assault.")
+			input("\n\t\t\t He messed up my order!")
+			print("\n\n\n........... You've been arrested, " + user[0] + '.'+ ' Littletown folk are sensitive.')
+			print('\nGAME OVER')
+			exit()
+		if wrong_order == 'B' or wrong_order == 'b': 
+			input("\n............ Johnny scoffs and rolls his eyes.")
+			input("\n\t I guess I can make you a new one.")
+			print("\n............ You've chosen to accept the order.")
+			input("\n\t\t\t No, that won't be necessary. I will just drink this as it is.")
+			input("\n............ Wise choice. The Sheriff respects your tactfulness.")
+			spacer()
+		if wrong_order == 'C' or wrong_order == 'c': 
+			print("\n............ You've chosen to complain.")
+			input("\n\t\t\t I don't want this drink. It's wrong.")
+			input("\n\t I guess I can make you a new one.")
+			input("\n\t\t\t I definitely need a new one.")
+			input("\n............ Johnny scoffs and rolls his eyes, but he takes your drink back.")
+			input("\n............ That wasn't a great move. The Sheriff dislikes your poor manners.")
+			attempt = 0
+			input("\n............ You'll have to pass this test to explain yourself.")
+			input("\n............ You'll have three attempts to figure out the next number in the sequence.")
+			print("\n............ Here it is: 1-2-6-?")
+			print("\n............ Attempt the sequence:")
+			sequence_answer = input()
+			if sequence_answer == "24": 
+				attempt = attempt + 1
+				print("\n.......... That's right! The sequence is ascending factorials!")
+				input("\n.......... Press Enter to explain yourself to the Sheriff.")
+				input("\n\t\t\t Sorry, Sheriff. I have a really bad intolerance to lactose.")
+				input("\n\t Oh, that can surely mess you up.")
+				input("\n............ That was a close one. You could have burned your bridge with the Sheriff.")
+				spacer(2)
+			elif sequence_answer != '24':
+				attempt = attempt + 1 
+				print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+				print("\n.......... Attempt sequence:")
+				sequence_answer = input()
+				if sequence_answer != '24': 
+					attempt = attempt + 1
+					print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+					print("\n.......... Attempt sequence:")
+					sequence_answer = input()
+					if sequence_answer != '24': 
+						attempt = attempt + 1
+						print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+						print("\n.......... You couldn't get the sequence right.")
+						input("\n.......... The Sheriff doesn't like you anymore.")
+						input("\n\t Actually, we're going to hand this case off to the FBI. We don't need the likes of you in Littletown.")
+						input("\n.......... You lost the case. The people of Littletown hate being disrespected by cityfolk.")
+						print("\nGAME OVER")
+						exit()
+					else: 
+						print("\n.......... That's right! The sequence is ascending factorials!")
+						input("\n.......... Press Enter to explain yourself to the Sheriff.")
+						input("\n\t\t\t Sorry, Sheriff. I have a really bad intolerance to lactose.")
+						input("\n\t Oh, that can surely mess you up.")
+						input("\n............ That was a close one. You could have burned your bridge with the Sheriff.")
+						spacer(2)
+				else: 
+					print("\n.......... That's right! The sequence is ascending factorials!")
+
+					input("\n.......... Press Enter to explain yourself to the Sheriff.")
+					input("\n\t\t\t Sorry, Sheriff. I have a really bad intolerance to lactose.")
+					input("\n\t Oh, that can surely mess you up.")
+					input("\n............ That was a close one. You could have burned your bridge with the Sheriff.")
+					spacer(2)
+			else: 
+				print("\n.......... That's right! The sequence is ascending factorials!")
+				input("\n.......... Press Enter to explain yourself to the Sheriff.")
+				input("\n\t\t\t Sorry, Sheriff. I have a really bad intolerance to lactose.")
+				input("\n\t Oh, that can surely mess you up.")
+				input("\n............ That was a close one. You could have burned your bridge with the Sheriff.")
+				spacer(2)
+			
+	
+def talk_to_Sheriff(answer):
+	while answer not in ['A', 'a', 'B', 'b', 'C', 'c']: 
+		print("I don't understand your answer. Please try again.\n")
+		answer = input()
+	else: 
+		if answer == 'A' or answer == 'a':
+			print("\n............ You've chosen to introduce yourself first.")
+			input("\n \t\t\t Hi, Sheriff. I'm Detective " + user[1] + ", but you can call me " + user[0] + "." ) 
+			input("\n \t\t\t I'm hoping you can catch me up to speed on everything you know about June Copeland.")
+			input("\n \t I can't help you until I've had my coffee.")
+			input("\n............ This Sheriff doesn't seem keen on you. Better catch up to him.")
+			input("\n \t\t\t Coffee sounds great, Sheriff. It's on me. I insist.")
+			input("\n............ I think you should take that grumble as a Yes.")
+			spacer()	
+			input('\nLEVEL 1: The Sheriff')
+			input('\n............... The Sheriff is irritated. I hope you can smooth things over.')
+			input('\n............... You order your coffee after the Sheriff.')
+			input('\n............... The barista, Johnny, looks at you funny.')
+			input("\n............... The Sheriff chooses a table by the window.")
+			print("\n............... How would you like to take notes?\n\t A) No notes \tB) Audio recording\t C) Notepad & pen")
+			notes = input()
+			Sheriff_irritated(notes)
+			input('\n............... After some awkward silence between you and the Sheriff, the barista calls out your name.')
+			input('\n............... Looks like Johnny messed up your order.')
+			input("\n \t\t\t Hey, this isn't what I ordered.")
+			print("\n............... What would you like to do? \n\t A) Throw the drink in Johnny's face. \tB) Accept the order as it is. \t C) Complain.")
+			wrong_order = input()
+			wrong_order_reaction(wrong_order)
+		elif answer == 'B' or answer == 'b': 
+			print("\n............ You've chosen to let him introduce himself.")
+			input("\n \t You look lost. Is there anything I can help you with? I'm the Sheriff here in Littletown.")
+			input("\n \t\t\t Actually, I'm Detective " + user[1] + ". I got a call about a missing person case.")
+			input("\n \t Oh pardon me. You sure are dressed fancy for Littletown.")
+			print("\n \t I should have known you were the bigshot detective coming in to find June Copeland.")				
+			input("\n \t\t\t I'm flattered. Littletown is so charming.")
+			input("\n \t\t\t I spotted a coffeeshop just around on the corner. Join me for a cuppa joe?")
+			input("\n \tWell, I'll be. You read my mind!\n")
+			input('\n........... Nicely done. Looks like the Sheriff is on your side.')
+			spacer()	
+			input('\nLEVEL 1: The Sheriff')
+			input("\n............... The Sheriff is amiable. Let's hope he's willing to answer your questions.")
+			input('\n............... You order your coffee after the Sheriff. ')
+			input("\n \tThis coffee's on me, Detective " + user[1] + ".")
+			input("\n \t\t\tYou don't have to do that, Sheriff.")
+			input("\n \tI insist.")
+			input("\n............... The Sheriff chooses a table by the window.")
+			print("\n............... How would you like to take notes?\n\t A) No notes \tB) Audio recording\t C) Notepad & pen")
+			notes = input()
+			Sheriff_amiable(notes)
+			input('\n............... Johnny brings over your drinks. Looks like the barista messed up your order. ')
+			print("\n............... What would you like to do? \n\t A) Throw the drink in Johnny's face. \tB) Accept the order as it is. \t C) Complain.")
+			wrong_order = input()
+			wrong_order_reaction(wrong_order)
+		elif answer == 'C' or answer == 'c': 
+			print("\n............ You've chosen to tell him off.")
+			input("\n \t\t\t No wonder someone went missing in this shithole. You're lucky I'm here Sheriff.")
+			input("\n \t Who the fuck are you?")
+			input("\n \t\t\t Detective " + user[1] + ".")
+			input("\n \t Well you're job is done here. I just decided to hand this case over the FBI.")
+			input("\n \t So why don't you make like a tree and get the fuck outta here!")
+			print('\n\n\n........... You lost the case, '+ user[0] + '.'+ ' Littletown folk are sensitive.')
+			print('\nGAME OVER')
+			exit()
+			
+
+def CopelandHouse(): 
+	input("\n............ You arrive at the Copeland's house and knock.")
+	input("\n............ There's no answer.")
+	print("\n............ Would you like to A) Find a point of entry\t B) Snoop in the mailbox\t C) Head back to the Sheriff's office ?")
+	answer = input()
+	while answer not in ['A', 'a', 'B', 'b', 'C', 'c']:
+		print("\n......... I'm sorry. I don't understand your answer. Please choose A, B, or C.")
+		answer = input()
+	if answer == 'A' or answer == 'a': 
+		input("\n............ You circle the house and find a low ground window into the basement.")
+		input("\n............ After knocking and hearing no response, you use your pocket knife to jimmy the latch.")
+		input("\n............ Once inside, you locate the stairs up to the first floor.")
+		input("\n............ When you reach the top, the door swings open before you can reach for the knob.")
+		input("\n............ Mrs. Copeland screams! The sound has woken her from her nap.")
+		input("\n............ She thought her daughter might have returned home, but instead a stranger has entered her home.")
+		input("\n\n\n....... You've been arrested, " + user[0] + ". Don't you know not to break and enter?")
+		print("\nGAME OVER")
+		exit()
+	if answer == 'B' or answer == 'b':
+		attempt = 0
+		input("\n............ This is a risky move. You'll have to pass a test.")
+		input("\n............ You'll have three attempts to figure out the next number in the sequence.")
+		print("\n............ Here it is: 2-3-5-?")
+		print("\n............ Attempt the sequence:")
+		sequence_answer = input()
+		if sequence_answer == "7": 
+			attempt = attempt + 1
+			print("\n.......... That's right! The sequence is prime numbers!")
+			input("\n.......... Press Enter to approach the mailbox.")
+			input("\n............ Before you reach the mailbox at the foot of the driveway, a car pulls in.")
+			input("\n............ The driver, a middle-aged man, rolls down the window.")
+			input("\n\t Can I help you?")
+			input("\n\t\t\t Hi, Mr. Copeland? I'm Detective " + user[1] + ". I'm in Littletown investigating the disappearance of your daughter.")
+			input("\n\t I see. Well, why don't you come in?")
+			input("\n............ That was a close one. You could have been caught rifling through someone's mail.")
+			spacer(2)
+		elif sequence_answer != '7':
+			attempt = attempt + 1 
+			print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+			print("\n.......... Attempt sequence:")
+			sequence_answer = input()
+			if sequence_answer != '7': 
+				attempt = attempt + 1
+				print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+				print("\n.......... Attempt sequence:")
+				sequence_answer = input()
+				if sequence_answer != '7': 
+					attempt = attempt + 1
+					print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+					print("\n.......... You couldn't get the sequence right.")
+					input("\n.......... Mr. Copeland reports you for mail theft, and you're arrested.")
+					print("\nGAME OVER")
+					exit()
+				else: 
+					print("\n.......... That's right! The sequence is prime numbers!")
+					input("\n.......... Press Enter to approach the mailbox.")
+					input("\n............ Before you reach the mailbox at the foot of the driveway, a car pulls in.")
+					input("\n............ The driver, a middle-aged man, rolls down the window.")
+					input("\n\t Can I help you?")
+					input("\n\t\t\t Hi, Mr. Copeland? I'm Detective " + user[1] + ". I'm in Littletown investigating the disappearance of your daughter.")
+					input("\n\t I see. Well, why don't you come in?")
+					input("\n............ That was a close one. You could have been caught rifling through someone's mail.")
+					spacer(2)
+			else: 
+				print("\n.......... That's right! The sequence is prime numbers!")
+				input("\n.......... Press Enter to approach the mailbox.")
+				input("\n............ Before you reach the mailbox at the foot of the driveway, a car pulls in.")
+				input("\n............ The driver, a middle-aged man, rolls down the window.")
+				input("\n\t Can I help you?")
+				input("\n\t\t\t Hi, Mr. Copeland? I'm Detective " + user[1] + ". I'm in Littletown investigating the disappearance of your daughter.")
+				input("\n\t I see. Well, why don't you come in?")
+				input("\n............ That was a close one. You could have been caught rifling through someone's mail.")
+				spacer(2)
+		else: 
+			print("\n.......... That's right! The sequence is prime numbers!")
+			input("\n.......... Press Enter to approach the mailbox.")
+			input("\n............ Before you reach the mailbox at the foot of the driveway, a car pulls in.")
+			input("\n............ The driver, a middle-aged man, rolls down the window.")
+			input("\n\t Can I help you?")
+			input("\n\t\t\t Hi, Mr. Copeland? I'm Detective " + user[1] + ". I'm in Littletown investigating the disappearance of your daughter.")
+			input("\n\t I see. Well, why don't you come in?")
+			input("\n............ That was a close one. You could have been caught rifling through someone's mail.")
+			spacer(2)
+		input("\n............. Lyle was on his way to the psychiatrist's funeral, but didn't feel strong enough to go without Mary.")
+		input("\n............. Since June's disappearance, Mary has been afraid to leave the house, not wanting to miss her daughter if she were to show up at home.")
+		input("\n............. Lyle and Mary Copeland set out tea for you, but you've had enough caffeine already.")
+		input("\n\t\t\t Thank you, Mr. and Mrs. Copeland, but I had coffee with the Sheriff not too long ago.")
+		print("\n........Mary asks you: ")
+		input("\n\t Have you found anything new about our June?")
+		input("\n\t\t\t Unfortunately not. That's why I'm here. I have some more questions.")
+		input("\n\t\t\t Before leaving for the dance, did June seem upset?")
+		input("\n........Lyle tells you: ")
+		input("\n\t Originally she wasn't going to go to the dance. She hadn't quite been herself for a while.")
+		input("\n\t She wouldn't even talk to Brad.")
+		input("\n\t\t\t Brad?")
+		input("\n\t Her boyfriend, Bradley Hinckley.")
+		input("\n\t But anyway, the night of, she just walked down the stairs in that pink dress, ready to go.")
+		input("\n\t We were just happy to see her out of bed.")
+		input("\n............. Mary tries to wipe away a tear discreetly, but you notice.")
+		input("\n............. You're confident there's a full report at the Sheriff's office, so you thank them for the tea and leave them be.")
+		input("\n............. Before turning on your car, you text the Sheriff.")
+		input("\n\t\t\t TO SHERIFF: Do you know where I can find Bradely Hinckley?")
+		input("\n\t FROM SHERIFF: He's here.")
+		input("\n\t FROM SHERIFF: He's at Whitaker's funeral.")
+		input("\n\t FROM SHERIFF: When he arrived, Dr. Whitaker's daughter Sydney left in a hurry.")
+		spacer()
+		print("LEVEL 3: Bradley Hinckley")
+	if answer == 'C' or answer == 'c':
+		input("\n............... The secretary at the Sheriff's Department, Lois, gets you June's file.")
+		input("\n............... A quote from a 'Bradley Hinckley' (boyfriend) strikes you as odd.")
+		input("\n......................'June was my first love.'")
+		input("\n...................... It's curious he chose the past tense....")
+		input("\n............... Lois gets your attention.")
+		input("\n............... She tells you the psychiatrist daughter, Sydney Whitaker, stormed out of the funeral.")
+		input("\n............... According to Whitaker's widow, Sydney left in a hurry when Bradley Hinckley entered the church.")
+		spacer()
+		print("LEVEL 3: Bradley Hinckley")
+	
+
+def MarquezHouse(): 
+	input("\n............ You arrive at the Marquez's house and knock.")
+	input("\n............ There's no answer.")
+	print("\n............ Would you like to A) Find a point of entry\t B) Snoop in the mailbox\t C) Head back to the Sheriff's office ?")
+	answer = input()
+	while answer not in ['A', 'a', 'B', 'b', 'C', 'c']:
+		print("\n......... I'm sorry. I don't understand your answer. Please choose A, B, or C.")
+		answer = input()
+	if answer == 'A' or answer == 'a': 
+		input("\n............ You circle the house and find a low ground window into the basement.")
+		input("\n............ After knocking and hearing no response, you use your pocket knife to jimmy the latch.")
+		input("\n............ Once inside, you locate the stairs up to the first floor.")
+		input("\n............ When you reach the top and open the door, a dog lunges at you!")
+		input("\n............ You scream as you fall down the stairs! The dog is biting at your leg and as you try to get away!")
+		input("\n............ A neighbor hears and rushes over to find a stranger in the Marquez' basement.")
+		input("\n\n\n....... You've been arrested, " + user[0] + ". Don't you know not to break and enter?")
+		print("\nGAME OVER")
+		exit()
+	if answer == 'B' or answer == 'b':
+		attempt = 0
+		input("\n............ This is a risky move. You'll have to pass a test.")
+		input("\n............ You'll have three attempts to figure out the next number in the sequence.")
+		print("\n............ Here it is: 2-3-5-?")
+		print("\n............ Attempt the sequence:")
+		sequence_answer = input()
+		if sequence_answer == "7": 
+			attempt = attempt + 1
+			print("\n.......... That's right! The sequence is prime numbers!")
+			input("\n.......... Press Enter to approach the mailbox.")
+			input("\n............ Before you reach the mailbox at the foot of the driveway, a teenage girl approaches")
+			input("\n............ She takes in your outfit, confused.")
+			input("\n\t Can I help you?")
+			input("\n\t\t\t Hi, there. I'm Detective " + user[1] + ". I'm in Littletown investigating the disappearance of June Copeland.")
+			input("\n\t I see.")
+			input("\n\t\t\t Are you Angelica Marquez?")
+			input("\n\t Yes. I suppose you have some questions for me. You can come inside.")
+			input("\n............ That was a close one. You could have been caught rifling through someone's mail.")
+			spacer(2)
+		elif sequence_answer != '7':
+			attempt = attempt + 1 
+			print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+			print("\n.......... Attempt sequence:")
+			sequence_answer = input()
+			if sequence_answer != '7': 
+				attempt = attempt + 1
+				print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+				print("\n.......... Attempt sequence:")
+				sequence_answer = input()
+				if sequence_answer != '7': 
+					attempt = attempt + 1
+					print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+					print("\n.......... You couldn't get the sequence right.")
+					input("\n.......... Angelica Marquez reports you for mail theft, and you're arrested.")
+					print("\nGAME OVER")
+					exit()
+				else: 
+					print("\n.......... That's right! The sequence is prime numbers!")
+					input("\n.......... Press Enter to approach the mailbox.")
+					iinput("\n............ Before you reach the mailbox at the foot of the driveway, a teenage girl approaches.")
+					input("\n............ She takes in your outfit, confused.")
+					input("\n\t Can I help you?")
+					input("\n\t\t\t Hi, there. I'm Detective " + user[1] + ". I'm in Littletown investigating the disappearance of June Copeland.")
+					input("\n\t I see.")
+					input("\n\t\t\t Are you Angelica Marquez?")
+					input("\n\t Yes. I suppose you have some questions for me. You can come inside.")
+					input("\n............ That was a close one. You could have been caught rifling through someone's mail.")
+					spacer(2)
+			else: 
+				print("\n.......... That's right! The sequence is prime numbers!")
+				input("\n.......... Press Enter to approach the mailbox.")
+				input("\n............ Before you reach the mailbox at the foot of the driveway, a teenage girl approaches.")
+				input("\n............ She takes in your outfit, confused.")
+				input("\n\t Can I help you?")
+				input("\n\t\t\t Hi, there. I'm Detective " + user[1] + ". I'm in Littletown investigating the disappearance of June Copeland.")
+				input("\n\t I see.")
+				input("\n\t\t\t Are you Angelica Marquez?")
+				input("\n\t Yes. I suppose you have some questions for me. You can come inside.")
+				input("\n............ That was a close one. You could have been caught rifling through someone's mail.")
+				spacer(2)
+		else: 
+			print("\n.......... That's right! The sequence is prime numbers!")
+			input("\n.......... Press Enter to approach the mailbox.")
+			input("\n............ Before you reach the mailbox at the foot of the driveway, a teenage girl approaches.")
+			input("\n............ She takes in your outfit, confused.")
+			input("\n\t Can I help you?")
+			input("\n\t\t\t Hi, there. I'm Detective " + user[1] + ". I'm in Littletown investigating the disappearance of June Copeland.")
+			input("\n\t I see.")
+			input("\n\t\t\t Are you Angelica Marquez?")
+			input("\n\t Yes. I suppose you have some questions for me. You can come inside.")
+			input("\n............ That was a close one. You could have been caught rifling through someone's mail.")
+			spacer(2)
+		input("\n............. Angelica was heading home from the psychiatrist's funeral. You check your watch.")
+		input("\n\t\t\t Must have been a quick funeral if you're home already.")
+		input("\n\t I left early.")
+		input("\n\t\t\t Why is that?")
+		input("\n\t Well, my best friend freaked out and left.")
+		input("\n\t\t\t Best friend?")
+		input("\n\t Yeah, Sydney Whitaker. It was her dad's funeral.")
+		input("\n\t\t\t Why did she leave her own dad's funeral? Did they not have a good relationship?")
+		input("\n\t They had a great relationship. She got upset when someone came in the church.")
+		input("\n\t I tried to follow her, to make sure she was alright, but she just lashed out at me again.")
+		input("\n\t I couldn't go back inside by myself so I just came home.")
+		input("\n............. Angelica looks uncomfortable.")
+		input("\n\t\t\t I'm sorry to hear that. I won't take too much more of your time. But I have a couple questions.")
+		input("\n\t\t\t I'm told you were one of the last people to see June leave the dance. She looked upset, right?")
+		input("\n\t She had definitely been crying. Her mascara was all over her face.")
+		input("\n\t\t\t What did you do after the dance?")
+		input("\n\t Well, I wanted to go home, but Sydney dragged me to Jeff Trimbell's after party.")
+		input("\n\t Don't worry, Detective " + user[1] + ". I don't drink.")
+		input("\n\t\t\t Do you know if June Copeland was supposed to be at the party?")
+		input("\n\t I don't know for sure, but Jeff is her boyfriend's best friend, so I would think yes.")
+		input("\n\t\t\t Right, and the boyfriend, what can you tell me about him?")
+		input("\n\t Brad's the typical bro. He's on the football team. His dad's a lawyer. He's going to Cornell in next year. And so on.")
+		input("\n\t\t\t Okay. I think that's all I need for now. I hope you're friend is okay, Angelica.")
+		input("\n\t Yeah, me, too.")
+		input("\n\t\t\t Before I go, who showed up to the funeral that upset her enough to leave?")
+		input("\n\t The one and only ....")
+		input("\n\t It was Brad Hinckley himself.")
+		input("\n\t\t\t June's boyfriend?")
+		input("\n\t That's right, Detective.")
+		input("\n\t\t\t Why would Brad Hinckley upset Sydney?")
+		input("\n\t You'll have to ask Sydney yourself.")
+		spacer()
+		print("LEVEL 3: Bradley Hinckley")
+	if answer == 'C' or answer == 'c':
+		input("\n............... The secretary at the Sheriff's Department, Lois, gets you June's file.")
+		input("\n............... A quote from a 'Bradley Hinckley' (boyfriend) strikes you as odd.")
+		input("\n......................'June was my first love.'")
+		input("\n...................... It's curious he chose the past tense....")
+		input("\n............... Lois gets your attention.")
+		input("\n............... She tells you the psychiatrist daughter, Sydney Whitaker, stormed out of the funeral.")
+		input("\n............... According to Whitaker's widow, Sydney left in a hurry when Bradley Hinckley entered the church.")
+		spacer()
+		print("LEVEL 3: Bradley Hinckley")
+
+
+def Funeral():
+	input("\n............. The church is nearly full for the funeral of Benjamin Whitaker.")
+	input("\n............. From what you gather, he was a well-liked citizen, or he had a lot of clients, in Littletown.")
+	input("\n............. You spot a woman and a teenage girl at the front of the church, facing the crowd.")
+	input("\n\t\t\t Who's that Sheriff? Family?")
+	input("\n That's right, Detective. Ben's wife Pamela and his daughter, Sydney.")
+	input("\n............. The church doors open behind you just as Sydney approaches the podium.")
+	input("\n............. She looks frozen at the stand. Her face turns from grief to anger.")
+	input("\n............. You turn to see who it is?")
+	input("\n\t\t\t And who's that, Sheriff?")
+	input("\n\t That's Brad Hinckley, a senior at Littletown High. June's boyfriend.")
+	input("\n............. Sydney leaves the podium and exits through the side door.")
+	input("\n............. A girl in the second row quickly follows after her.")
+	input("\n\t\t\t Now, why would June's boyfriend cause Sydney to flea the church?")
+	spacer()
+	print("LEVEL 3: Bradley Hinckley")
+
+def Sheriff_mentions_witness(answer): 
+	while answer not in ['A', 'a', 'B', 'b']: 
+		print("\n .............. I don't understand your answer. Please try again.\n")
+		answer = input()
+	else: 
+		if answer == 'A' or answer == 'a': 
+			input("\n\t June never made it home that night.")
+			input("\n\t Oh shit. I lost track of the time. I have a funeral to attend.")
+			input("\n\t Local psychiatrist fell asleep at the wheel. Drove straight into a tree off highway 615 a few days ago.")
+			print("\n.............. Would you like to A) attend the funeral or B) stop by the Copeland's house ?")
+			answer = input()
+			while answer not in ['A', 'B', 'a', 'b']:
+				print("\n .............. I don't understand your answer. Please try again.\n")
+				answer = input()
+			if answer == 'A' or answer == 'a':
+				input("\n\t\t\t That's terrible. Actually, if you don't mind, Sheriff, I'll join you.") 
+				spacer()
+				print("\nLEVEL 2: The Funeral of Benjamin Whitaker")
+				Funeral()
+			elif answer == 'B' or answer == 'b': 
+				input("\n\t\t\t I'm sorry to hear that Sheriff. I think I'll stop by the Copeland's house.")
+				spacer()
+				print("LEVEL 2: Lyle and Mary Copeland")
+				CopelandHouse()
+		elif answer == 'B' or answer == 'b': 
+			input("\n\t\t\t Who is this witness, Sheriff?")
+			input("\n\t A classmate by the name of Angelica Marquez.")
+			input("\n\t Oh shit. I lost track of the time. I have a funeral to attend.")
+			input("\n\t Local psychiatrist fell asleep at the wheel. Drove straight into a tree off highway 615 a few days ago.")
+			print("\n.............. Would you like to A) attend the funeral or B) stop by Angelica Marquez's house ?")
+			answer = input()
+			while answer not in ['A', 'a', 'B', 'b']:
+				print("\n .............. I don't understand your answer. Please try again.\n")
+				answer = input()
+			if answer == 'A' or answer == 'a':
+				input("\n\t\t\t That's terrible. Actually, if you don't mind, Sheriff, I'll join you.") 
+				spacer()
+				print('\nLEVEL 2: The Funeral of Benjamin Whitaker')
+				Funeral()
+			elif answer == 'B' or answer == 'b': 
+			 	input("\n\t\t\t I'm sorry to hear that, Sheriff. I think I'll stop by Angelica Marquez's house.")
+			 	spacer()
+			 	print('\nLEVEL 2: Angelica Marquez')
+			 	MarquezHouse()
+			 	
+
+def BradleyHinckley(): 
+	input('\n............... Brad Hinckley looks confused as you approach after the funeral service. Better introduce yourself.')
+	input("\n\t\t\t Hello there. I'm Detective, " + user[1] + ". I heard you're June Copeland's boyfriend. Mind if I talk to you outside?")
+	input("\n............... Brad shakes your hand. He uses a firm grip.")
+	input("\n\t If it will help you find June, of course, Detective.")
+	print('\n............... Would you like to A) ask about June\t B) ask about Whitaker C) accuse Bradley')
+	answer = input()
+	while answer not in ['A', 'a', 'B', 'b', 'C', 'c']: 
+		print("\n.............. I don't understand your answer. Please try again.")
+		answer = input()
+	if answer == 'A' or answer == 'a': 
+		input("\n\t\t\t Were you and June together the night of the dance?") 
+		input("\n.............. Brad shakes his head no.")
+		input("\n\t I didn't even know she was there. She told me she wasn't up to coming, but didn't tell explain why.")
+		input("\n\t\t\t Was she sick?")
+		input("\n\t I mean, not with anything physical, but yes, June was sick.")
+		input("\n\t June was a client of Dr. Whitaker's.")
+		input("\n\t\t\t June was a client? I didn't know that.")
+		input("\n\t Barely anyone did.")
+		input("\n\t\t\t If June was sick the night of the dance, how come you didn't stay with her?")
+		input("\n.............. Brad scratches the back of his neck.")
+		input("\n\t She felt bad and said that I should go, since it's Senior year and all.")
+		input("\n\t I know I should have gone over to her house and stayed with her, Detective. I feel bad enough already.")
+		input("\n\t\t\t I'm sorry, son. So you never saw June that night?")
+		input("\n.............. Brad shakes his head no again.")
+		input("\n\t\t\t Do you remember the last thing she said to you?")
+		input("\n\t 'Have fun'. How horrible is that?")
+		input("\n\t\t\t Again, I'm sorry about that.")
+		input("\n\t\t\t I have just one more question for you.")
+		input("\n\t Okay, Detective.")
+		input("\n\t\t\t Why did Sydney Whitaker leave her father's funeral when you arrived?")
+		input("\n.............. Brad shrugs")
+		input("\n\t I can't be sure. It could be because Sydney's in love with June, but June doesn't love her back.")
+		print("LEVEL 4: Sydney Whitaker")
+		spacer()
+	if answer == 'B' or answer == 'b':
+		attempt = 0
+		input("\n\t\t\t Were you a client of Benjamin Whitaker's?") 
+		input("\n............... That was risky. Brad doesn't seem to like that question.")
+		input("\n............... Better hope he doesn't take it poorly.")
+		input("\n............ You'll have to pass a test for Brad to take it well.")
+		input("\n............ You'll have three attempts to figure out the riddle.")
+		print("\n............ What planet did man discover first?")
+		print("\n............ Attempt the riddle")
+		riddle_answer = input()
+		if riddle_answer == "Earth" or riddle_answer == 'earth': 
+			attempt = attempt + 1
+			print("\n.......... That's right. Man discovered Earth first. Duh!")
+			input("\n.......... Press Enter to continue your conversation with Brad.")
+			input("\n\t No, Detective, but he was very helpful to June the past few months.")
+			input("\n\t\t\t June was a client? I didn't know that.")
+			input("\n\t Barely anyone did.")
+			input("\n\t\t\t Why did Sydney Whitaker leave her father's funeral when you arrived?")
+			input("\n.............. Brad shrugs")
+			input("\n\t I can't be sure. It could be because Sydney's in love with June, but June doesn't love her back.")
+			spacer()
+			print("LEVEL 4: Sydney Whitaker")
+		elif riddle_answer not in ['Earth', 'earth', 'Earth ', 'earth ']: 
+			attempt = attempt + 1 
+			print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+			print("\n.......... Attempt riddle: What planet did man discover first")
+			riddle_answer = input()
+			if riddle_answer not in ['Earth', 'earth', 'Earth ', 'earth ']: 
+				attempt = attempt + 1
+				print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+				print("\n.......... Attempt riddle: What planet did man discover first?")
+				riddle_answer = input()
+				if riddle_answer not in ['Earth', 'earth', 'Earth ', 'earth ']: 
+					attempt = attempt + 1
+					print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+					print("\n.......... You couldn't solve the riddle.")
+					input("\n.......... Brad tells his lawyer dad that you asked him personal medical information without a legal guardian present.")
+					input("\n.......... Mr. Hinckley sues your ass in court.")
+					input("\n.......... You lose the case, obviously.")
+					print("\nGAME OVER")
+					exit()
+				else: 
+					print("\n.......... That's right. Man discovered Earth first. Duh!")
+					input("\n.......... Press Enter to continue your conversation with Brad.")
+					input("\n\t No, Detective, but he was very helpful to June the past few months.")
+					input("\n\t\t\t June was a client? I didn't know that.")
+					input("\n\t Barely anyone did.")
+					input("\n\t\t\t Why did Sydney Whitaker leave her father's funeral when you arrived?")
+					input("\n.............. Brad shrugs")
+					input("\n\t I can't be sure. It could be because Sydney's in love with June, but June doesn't love her back.")
+					spacer()
+					print("LEVEL 4: Sydney Whitaker")
+			else: 
+				print("\n.......... That's right. Man discovered Earth first. Duh!")
+				input("\n.......... Press Enter to continue your conversation with Brad.")
+				input("\n\t No, Detective, but he was very helpful to June the past few months.")
+				input("\n\t\t\t June was a client? I didn't know that.")
+				input("\n\t Barely anyone did.")
+				input("\n\t\t\t Why did Sydney Whitaker leave her father's funeral when you arrived?")
+				input("\n.............. Brad shrugs")
+				input("\n\t I can't be sure. It could be because Sydney's in love with June, but June doesn't love her back.")
+				spacer()
+				print("LEVEL 4: Sydney Whitaker")
+		else: 
+			print("\n.......... That's right. Man discovered Earth first. Duh!")
+			input("\n.......... Press Enter to continue your conversation with Brad.")
+			input("\n\t No, Detective, but he was very helpful to June the past few months.")
+			input("\n\t\t\t June was a client? I didn't know that.")
+			input("\n\t Barely anyone did.")
+			input("\n\t\t\t Why did Sydney Whitaker leave her father's funeral when you arrived?")
+			input("\n.............. Brad shrugs")
+			input("\n\t I can't be sure. It could be that Sydney's in love with June, but June doesn't love her back.")
+			spacer()
+			print("LEVEL 4: Sydney Whitaker")
+	if answer == 'C' or answer == 'c': 
+		input("\n\t\t\t I think you're responsible for June's disappearance.")
+		input("\n................ Are you nuts!? The kid's lawyer is the best in the state of Ohio!")
+		input("\n................ Brad's dad sues your ass in court.")
+		print("\n................ You've lost the case, obviously.")
+		print("\nGAME OVER")
+		exit()
+
+
+def SydneyWhitaker(): 
+	input("\n............... The deputy spotted Sydney Whitaker's bicycle near the high school.")
+	input("\n............... Once you arrive, it doesn't take you long to find Sydney.")
+	input("\n............... She's the only person in the bleachers of the football stands.")
+	input("\n............... Dressed in black, she sits there smoking a cigarette, her cheeks red as if she just worked out.")
+	input("\n............... Judging by how steep the hill was that led to the high school, she probably did get a work out on her bike...")
+	input("\n............... ... Or she could have been crying. Her father's funeral was today, after all.")
+	input("\n\t\t\t Mind if I sit with you?")
+	input("\n\t I'm not fond of strangers. Teenage girls are going missing in this town, haven't you heard?")
+	input("\n............... You show Sydney your badge and sit down.")
+	print("\n............... Sydney offers you her cigarette. Do you take it? (yes or no)")
+	cigarette = input()
+	affirmative = ['yes', 'Yes', 'YES', 'Yes!', 'yeah', 'ya', 'y']
+	negative = ['no', 'No', 'NO', 'n', 'nah', 'no!', 'No!']
+	while cigarette not in affirmative and cigarette not in negative: 
+		print("................. I don't understand your answer. Please try again.\n")
+		cigarette = input()
+	else: 
+		if cigarette in negative: 
+			input("\n\t\t\t No thanks.")
+			input("\n............. Sydney takes one last drag and then smushes it beneath her black boot.")
+		elif cigarette in affirmative: 
+			input("\n\t\t\t Sure.")
+			input("\n............. You crush her cigarette under your shoe.")
+			input("\n\t Hey!")
+			input("\n\t\t\t Smoking is bad for you.")
+			input("\n............. Sydney rolls her eyes but doesn't argue further.")
+	input("\n\t\t\t I'm sorry about your father.")
+	input("\n\t You and me both, " + user[0] + '.')
+	input("\n\t\t\t Do you know why I'm in Littletown?")
+	input("\n\t Either you like shitholes or you're trying to find June.")
+	print("\n............... How do you reply? A) I just like shitholes. B) I'm trying to find June. C) Both.")
+	reply = input()
+	while reply not in ['A', 'a', 'B', 'b', 'C', 'c']: 
+		print("................. I don't understand your answer. Please try again.")
+		reply = input()
+	else: 
+		if reply in ['A', 'a']: 
+			input("\n\t\t\t I just like shitholes.")
+			input("\n.......... Sydney tells you to fuck off and descends the bleachers.")
+			input("\n.......... You're the last person to see her before she, too, disappears.")
+			input("\n.......... June's corpse is found in the river the next day.")
+			input("\n.......... You still don't know who is responsible.")
+			print("\nGAME OVER")
+			exit()
+		elif reply in ['B', 'b']: 
+			input("\n\t\t\t I'm trying to find June.")
+			input("\n.......... Sydney's bothered you didn't appreciate her joke.")
+			input("\n.......... She closes herself off to you. Better make up for it quick.")
+			input("\n.......... To keep Sydney talking you need to correctly determine this joke's punchline:")
+			print("\n.......... You have three attempts. 'Which side of a duck has the most feathers?")
+			attempt = 0
+			joke_answer = input()
+			if joke_answer in ['outside', 'the outside', 'the outside ', 'outside ']:
+				attempt = attempt + 1
+				print("\n.......... That's right! The outside!")
+				input("\n.......... Press Enter to continue your conversation with Sydney.")
+				input("\n\t\t\t This shithole is just a bonus.")
+				input("\n............. that catches Sydney off guard. She cracks a smile.")
+			elif joke_answer not in ['outside', 'the outside', 'the outside ', 'outside ']: 
+				attempt = attempt + 1 
+				print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+				print("\n.......... Attempt punchline: 'Which side of a duck has the most feathers?'")
+				joke_answer = input()
+				if joke_answer not in ['Earth', 'earth', 'Earth ', 'earth ']: 
+					attempt = attempt + 1
+					print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+					print("\n.......... Attempt punchline: 'Which side of a duck has the most feathers?'")
+					joke_answer = input()
+					if joke_answer not in ['Earth', 'earth', 'Earth ', 'earth ']: 
+						attempt = attempt + 1
+						print("\n.......... Sorry, that's not it. Attempts remaining: " + str(3-attempt))
+						print("\n.......... You couldn't figure out the punchline")
+						input("\n.......... You probably should have replied with 'Both'")
+						input("\n.......... You're not very funny when I'm not doing the work for you.")
+						print("\nGAME OVER")
+						exit()
+					else: 
+						print("\n.......... That's right! The outside!")
+						input("\n.......... Press Enter to continue your conversation with Sydney.")
+						input("\n\t\t\t This shithole is just a bonus.")
+						input("\n............. that catches Sydney off guard. She cracks a smile.")
+				else: 
+					print("\n.......... That's right! The outside!")
+					input("\n.......... Press Enter to continue your conversation with Sydney.")
+					input("\n\t\t\t This shithole is just a bonus.")
+					input("\n............. that catches Sydney off guard. She cracks a smile.")
+			else: 	
+				print("\n.......... That's right! The outside!")
+				input("\n.......... Press Enter to continue your conversation with Sydney.")
+				input("\n\t\t\t This shithole is just a bonus.")
+				input("\n............. that catches Sydney off guard. She cracks a smile.")
+		elif reply in ['C', 'c']: 
+			input("\n............. that catches Sydney off guard. She cracks a smile.")
+		input("\n\t\t\t Brad Hinckley told me some interesting information at the end of your father's service.")
+		input("\n\t I'm sure Brad did.")
+		input("\n.............. You weren't expecting that, but you proceed anyway.")
+		input("\n\t\t\t He said you're in love with June Copeland.")
+		input("\n.............. Sydney's breath hitches. She bites her nail.")
+		input("\n\t He knew?")
+		input("\n\t\t\t So it's true?")
+		input("\n.............. Sydney admits the truth.")
+		input("\n\t Yeah. It's true. Brad's smarter than I thought.")
+		input("\n\t\t\t Can you tell me about the last time you saw June?")
+		input("\n\t It was at the dance. I was so happy. I didn't think she was coming.")
+		input("\n\t But she did. And she looked beautiful.")
+		input("\n\t\t\t What happened?")
+		input("\n\t She told me she loved me. We kissed here, on the bleachers.")
+		input("\n\t We were gonna go back to my house, but she left her purse inside at the bag check.")
+		input("\n\t While I was waiting, she texted me to say plans had changed.")
+		input("\n\t She was on her way to Jeff Trimbell's after-party and she wanted me to come.")
+		input("\n\t So I went back inside and found my best friend, Angelica. I convinced her to come with me.")
+		input("\n\t June never showed up at the party.")
+		input("\n\t\t\t Brad told me that June doesn't love you, Sydney.")
+		input("\n.............. Sydney's scoffs.")
+		input("\n\t What does he know?")
+		input("\n\t\t\t He knows June was a client of your dad's.")
+		input("\n.............. Sydney's reaction tells you she definitely didn't know that.")
+		input("\n\t June was seeing my dad?")
+		input("\n\t\t\t From what I understand, yes.")
+		input("\n\t She never said anything.")
+		input("\n\t\t\t Sydney, do you know where I could find your father's file on June?")
+		spacer()
+		input("\nLEVEL 5: Time's Up")
+		
+
+def TheArrest(): 
+		input("\n.............. Sydney agrees to help you get June's file.")
+		input("\n.............. It could have information about June's assailant.")
+		input("\n.............. Benjamin Whitaker's office is in the Whitaker home.")
+		input("\n.............. You offer to give Sydney a ride, but she has to take her bike home anyway.")
+		input("\n.............. The file could have information about June's assailant.")
+		input("\n.............. On your way, you receive a text from the Sheriff.")
+		input("\n\t FROM SHERIFF: June's kidnapper has posted on Twitter from an anonymous account.")
+		input("\n\t FROM SHERIFF: If you don't leave town by 4 p.m., they're going to kill June.")
+		input("\n.............. You check your watch: 2:30 pm")
+		input("\n.............. Better hurry. June's file is your last chance to collect information.")
+		spacer(2)
+		input("\n.............. Sydney is already there when you arrive.")
+		input("\n.............. She's hysterical.")
+		input("\n\t Have you read the tweet, Detective? They're gonna kill her! They're gonna kill June!")
+		input("\n\t Please! I can't lose her, too!")
+		input("\n\t\t\t Please calm down, Sydney. I need that file.")
+		input("\n\t Mom!")
+		input("\n\t Mom!")
+		input("\n.............. Pamela Whitaker agrees to get the spare key for the filing cabinet in her husband's office.")
+		input("\n.............. When you enter the office, you immediately realize what's happened.")
+		input("\n.............. Sydney screams.")
+		input("\n\t Someone broke in!")
+		input("\n.............. There's a rock in a pile of glass below a broken window.")
+		input("\n.............. The filing cabinet has been forced open.")
+		input("\n.............. You already know what you're going to find, but you look anyway.")
+		input("\n.............. June Copeland's file is gone.")
+		input("\n.............. You check your watch: 3 pm.")
+		input("\n.............. Anyone could have broken in while you drove to the Whitaker house.")
+		input("\n.............. Time to make a decision.")
+		spacer()
+		input("............... This is it. At least one person has been deceiving you.")
+		print("Choose one option:\n A) Leave Littletown immediately\n B) Arrest June Copeland's father\n C) Arrest Sydney Whitaker\n D) Arrest Bradley Hinckley\n E) Arrest Angelica Marquez\n F) Arrest Johnny the barista\n")
+		arrest_options = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'a', 'b', 'c', 'd', 'e']
+		arrest = input()
+		while arrest not in arrest_options:
+			print(".................. I'm don't understand your response. Please try again.")
+			arrest = input()
+		else: 
+			if arrest == 'A' or arrest == 'a': 
+				input("\n.......... You leave Littletown immediately.")
+				input("\n.......... June's corpse is found in the river the next day.")
+				input("\n.......... You still don't know who is responsible.")
+				print("\nGAME OVER")
+				exit()
+			if arrest == 'B' or arrest == 'b': 
+				input("\n.......... You arrest Lyle Copeland, June's father.")
+				input("\n.......... You suspect he was jealous that his daughter could talk to Benjamin Whitaker, but not her own father.")
+				input("\n.......... June's corpse is found in the river the next day.")
+				input("\n.......... You still don't know who is responsible.")
+				print("\nGAME OVER")
+				exit()
+			if arrest == 'C' or arrest == 'c': 
+				input("\n.......... You arrest Sydney Whitaker, June's admirer.")
+				input("\n.......... You suspect she was jealous that June loved Brad and not her.")
+				input("\n.......... June's corpse is found in the river the next day.")
+				input("\n.......... You still don't know who is responsible.")
+				print("\nGAME OVER")
+				exit()
+			if arrest == 'D' or arrest == 'd':
+				input("\n.......... You arrest Bradley Hinckley, June's boyfriend.")
+				input("\n.......... You suspect he has been lying to you.")
+				input("\n.......... After a day in custody, Jeff Trimbell comes to the Sheriff's Office.")
+				input("\n.......... He admits to knowing where Bradley has been keeping June captive.")
+				input("\n.......... Bradley confesses.")
+				input("\n\t 'If I can't have June, no one can!'")
+				input("\n.......... June Copeland loved Sydney Whitaker after all.")
+				input("\n.......... Bradley saw them kiss the night of Homecoming.")
+				input("\n.......... While you talked to Sydney at the high school, Brad broke into her father's office and destroyed June's file.")
+				input("\n.......... Inside was evidence that Brad had been emotionally manipulating her into staying with him.")
+				input("\n.......... The Copelands thank you for saving their daughter.")
+				input("\n.......... The Sheriff shakes your hand.")
+				input("\n.......... Sydney says goodbye in her own way. She gifts you a Littletown bumper sticker.")
+				input("\n\t 'Littletown: Ohio's little shithole'")
+				input("\n.......... Well done, Detective " + user[1] + '.')
+				print("\nTHE END.")
+				exit()
+			if arrest == 'E' or arrest == 'e': 
+				input("\n.......... You arrest Angelica Marquez, June's best friend.")
+				input("\n.......... You suspect she was jealous that Sydney wanted to spend so much time with June and not her.")
+				input("\n.......... June's corpse is found in the river the next day.")
+				input("\n.......... You still don't know who is responsible.")
+				print("\nGAME OVER")
+				exit()
+			if arrest == 'F' or arrest == 'f': 
+				input("\n.......... You arrest Johnny, the barista.")
+				input("\n.......... Seriously???")
+				input("\n.......... All you know is that he messed up your coffee order.")
+				input("\n.......... You really fucked up, Detective " + user[1] + '.')
+				input("\n.......... June's corpse is found in the river the next day.")
+				input("\n.......... You still don't know who is responsible.")
+				print("\nGAME OVER")
+				exit()
+
+
+print('\n............ What would you like to do?\n\t A) Introduce yourself first \tB) Let him introduce himself\t C) Tell him off')
+answer = input()
+talk_to_Sheriff(answer)
+input('\n............... The Sheriff tells you June Copeland went missing 9 days ago.')
+input('\n\t June was last seen leaving the Homecoming Dance.')
+input('\n\t A witness said she looked like she had been crying.')
+print('\n............ Do you want to A) let the Sheriff continue or B) ask who the witness was?')
+answer = input()
+Sheriff_mentions_witness(answer)
+BradleyHinckley()
+SydneyWhitaker()
+TheArrest()
